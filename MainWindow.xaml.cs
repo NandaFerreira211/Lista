@@ -27,4 +27,39 @@ public partial class MainWindow : Window
         }
         nomes.Add(tbNome.Text);
     }
+
+    private void BtnRemoveNome_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (!nomes.Contains(tbNome.Text,StringComparer.CurrentCultureIgnoreCase))
+        {
+         MessageBox.Show("O nome não existe na lista!");
+         return;
+        }
+
+        var nomeEcontrado = nomes.FirstOrDefault
+            (nomePessoa => nomePessoa.Equals(tbNome.Text , StringComparison.CurrentCultureIgnoreCase));
+        
+        
+        nomes.Remove(nomeEcontrado);
+        
+    }
+
+    private void BtnEncontraNomes_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(tbNome.Text))
+        {
+            MessageBox.Show("Escreva um nome válido!");
+            return;
+        }                                                                                                  
+        lbNomes.SelectedItems.Clear();
+        var termoBusca = tbNome.Text.ToLower();
+
+        foreach (var nome in nomes)
+        {
+            if (nome.Contains(termoBusca,StringComparison.CurrentCultureIgnoreCase))
+            {
+              lbNomes.SelectedItems.Add(nome);  
+            } 
+        }
+    }
 }
